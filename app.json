@@ -1,0 +1,71 @@
+{
+  "name": "whatsapp-bot (Ethix-MD)",
+  "description": " Whatsapp bot.",
+  "keywords": [
+    "whatsapp bot"
+  ],
+  "repository": "https://github.com/Ethix-Xsid/Ethix-MD",
+  "stack": "container",
+  "env": { 
+      "SESSION_ID": {
+      "description": "your session id",
+      "required": true,
+      "value": ""
+    },
+    "MODE": {
+      "description": "mode public or self",
+      "required": true,
+      "value": "public"
+    },
+    "AUTO_STATUS_SEEN": {
+      "description": "make it true if you want bot to view status",
+      "required": false,
+      "value": ""
+    },
+    "AUTO_READ": {
+      "description": "make it true if you want bot to read message",
+      "required": false,
+      "value": ""
+    },
+    "AUTO_TYPING": {
+      "description": "make it true if you want bot to show typing",
+      "required": false,
+      "value": ""
+    },
+    "AUTO_RECORDING": {
+      "description": "make it true if you want bot to show recording audio",
+      "required": false,
+      "value": ""
+    },
+    "ALWAYS_ONLINE": {
+      "description": "make it true if you want bot to show always online",
+      "required": false,
+      "value": ""
+    },
+    "AUTO_BLOCK": {
+      "description": "make it true if you want bot to auto block only 212 numbers",
+      "required": false,
+      "value": ""
+    },
+    "REJECT_CALL": {
+      "description": "make it true if you want to reject call",
+      "required": false,
+      "value": ""
+    }
+    },
+    "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "https://github.com/DuckyTeam/heroku-buildpack-imagemagick.git"
+    },
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+    },
+    {
+      "url": "https://github.com/clhuang/heroku-buildpack-webp-binaries.git"
+    }
+  ]
+}
+
