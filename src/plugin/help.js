@@ -182,6 +182,20 @@ let mode = ethix.public ? 'public' : 'private';
                     ]}
                   ]}`
                 },
+                {
+          "name": "quick_reply",
+          "buttonParamsJson": JSON.stringify({
+            display_text: "ALIVE",
+            id: `.alive`
+          })
+        },
+        {
+          "name": "quick_reply",
+          "buttonParamsJson": JSON.stringify({
+            display_text: "PING",
+            id: `.ping`
+          })
+        },
               ],
             }),
             contextInfo: {
