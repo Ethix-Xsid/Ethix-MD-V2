@@ -14,13 +14,13 @@ To get started with Ethix-MD-V2, follow these steps:
 
 Start by forking this repository to your own GitHub account. Click the button below to fork:
 
-<a href='https://github.com/Ethix-XsiEthix-Xsid-V2/fork' target="_blank"><img alt='Fork repo' src='https://img.shields.io/badge/Fork This Repo-black?style=for-the-badge&logo=git&logoColor=white'/></a>
+<a href='https://github.com/Ethix-Xsid/Ethix-MD/fork' target="_blank"><img alt='Fork repo' src='https://img.shields.io/badge/Fork This Repo-black?style=for-the-badge&logo=git&logoColor=white'/></a>
 
 ### 2. Get Session ID via Pair Code
 
 You'll need a session ID to run the bot. Click the button below to obtain your session ID:
 
-<a href='https://resulting-anett-goutammallick516-08ee7a2d.koyeb.app' target="_blank"><img alt='Get Session ID' src='https://img.shields.io/badge/Click here to get your session id-black?style=for-the-badge&logo=opencv&logoColor=white'/></a>
+<a href='https://toxic-crocodile-goutammallick516-cab1ca96.koyeb.app' target="_blank"><img alt='Get Session ID' src='https://img.shields.io/badge/Click here to get your session id-black?style=for-the-badge&logo=opencv&logoColor=white'/></a>
 
 ## ðŸš€ Deployment Options
 
@@ -78,15 +78,31 @@ You can also deploy the bot directly on your Android device using Termux. Hereâ€
    cd Ethix-MD
    ```
 
-5. **Set the `SESSION_ID` Variable:**
+5. **Set the `SESSION_ID` in the `.env` File:**
 
-   After navigating to the project directory, set your `SESSION_ID` environment variable with the session ID you obtained earlier:
+   To set the `SESSION_ID`, you need to create or edit the `.env` file in the project directory.
 
-   ```bash
-   export SESSION_ID='your-session-id-here'
-   ```
+   - **Create/Edit the `.env` File:**
 
-   Replace `'your-session-id-here'` with your actual session ID. This step is crucial for the bot to function correctly.
+     Open (or create) the `.env` file using a text editor like `nano`:
+
+     ```bash
+     nano .env
+     ```
+
+   - **Add the `SESSION_ID` Variable:**
+
+     Add the following line to the `.env` file:
+
+     ```bash
+     SESSION_ID='your-session-id-here'
+     ```
+
+     Replace `'your-session-id-here'` with the actual session ID you obtained.
+
+   - **Save and Exit:**
+
+     If using `nano`, save the changes by pressing `CTRL + X`, then `Y`, and then `Enter` to exit.
 
 6. **Install Node Modules:**
 
