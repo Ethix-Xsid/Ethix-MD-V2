@@ -2,7 +2,7 @@ import axios from 'axios';
 import FormData from 'form-data';
 import fetch from 'node-fetch';
 import fs from 'fs';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import mime from 'mime';
 
 export const TelegraPh = async (path) => {
