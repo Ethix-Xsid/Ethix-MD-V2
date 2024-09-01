@@ -112,6 +112,20 @@ let mode = ethix.public ? 'public' : 'private';
             nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
               buttons: [
                 {
+          "name": "quick_reply",
+          "buttonParamsJson": JSON.stringify({
+            display_text: "ALIVE",
+            id: `.alive`
+          })
+        },
+        {
+          "name": "quick_reply",
+          "buttonParamsJson": JSON.stringify({
+            display_text: "PING",
+            id: `.ping`
+          })
+        },
+                {
                   "name": "single_select",
                   "buttonParamsJson": `{"title":"🔖𝚻𝚫𝚸 𝐅𝚯𝚪 𝚯𝚸𝚵𝚴 𝚳𝚵𝚴𝐔",
                  "sections":
@@ -182,20 +196,6 @@ let mode = ethix.public ? 'public' : 'private';
                     ]}
                   ]}`
                 },
-                {
-          "name": "quick_reply",
-          "buttonParamsJson": JSON.stringify({
-            display_text: "ALIVE",
-            id: `.alive`
-          })
-        },
-        {
-          "name": "quick_reply",
-          "buttonParamsJson": JSON.stringify({
-            display_text: "PING",
-            id: `.ping`
-          })
-        },
               ],
             }),
             contextInfo: {
