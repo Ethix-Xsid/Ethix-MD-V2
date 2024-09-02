@@ -75,7 +75,7 @@ You can also deploy the bot directly on your Android device using Termux. Hereâ€
    Change into the project directory:
 
    ```bash
-   cd Ethix-MD
+   cd Ethix-MD-V2
    ```
 
 5. **Set the `SESSION_ID` in the `.env` File:**
