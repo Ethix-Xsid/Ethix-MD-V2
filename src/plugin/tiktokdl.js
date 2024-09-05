@@ -55,14 +55,14 @@ const text = m.body.slice(prefix.length + cmd.length).trim();
           "name": "quick_reply",
           "buttonParamsJson": JSON.stringify({
             display_text: "🎦 Video",
-            id: `mediaa_video_${searchIndex}`
+            id: `ttmedia_video_${searchIndex}`
           })
         },
         {
           "name": "quick_reply",
           "buttonParamsJson": JSON.stringify({
             display_text: "🎵 Audio",
-            id: `mediaa_audio_${searchIndex}`
+            id: `ttmedia_audio_${searchIndex}`
           })
         }
       ];
@@ -114,7 +114,7 @@ const text = m.body.slice(prefix.length + cmd.length).trim();
       await m.React("❌");
     }
   } else if (selectedId) { 
-    if (selectedId.startsWith('mediaa_')) {
+    if (selectedId.startsWith('ttmedia_')) {
       const parts = selectedId.split('_');
       const type = parts[1];
       const key = parseInt(parts[2]);
