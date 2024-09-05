@@ -28,14 +28,14 @@ _________________________________________
           "name": "quick_reply",
           "buttonParamsJson": JSON.stringify({
             display_text: "MENU",
-            id: `.menu`
+            id: `${prefix}menu`
           })
         },
         {
           "name": "quick_reply",
           "buttonParamsJson": JSON.stringify({
             display_text: "PING",
-            id: `.ping`
+            id: `${prefix}ping`
           })
         }
         ];
