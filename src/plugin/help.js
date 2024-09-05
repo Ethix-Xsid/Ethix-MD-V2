@@ -72,7 +72,7 @@ const test = async (m, Matrix) => {
   const prefix = /^[\\/!#.]/gi.test(m.body) ? m.body.match(/^[\\/!#.]/gi)[0] : '.';
         const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).toLowerCase() : '';
        
-       const mode = process.env.MODE ? 'public' : 'private';
+       const mode = process.env.MODE === 'public' ? 'public' : 'private';
            
         const validCommands = ['list', 'help', 'menu'];
 
@@ -88,7 +88,7 @@ const test = async (m, Matrix) => {
             body: proto.Message.InteractiveMessage.Body.create({
               text: `╭─────────────━┈⊷
 │🤖 ʙᴏᴛ ɴᴀᴍᴇ: *ᴇᴛʜɪx-ᴍᴅ*
-│📍 ᴠᴇʀꜱɪᴏɴ: 2.0.3
+│📍 ᴠᴇʀꜱɪᴏɴ: 2.1.0
 │👨‍💻 ᴏᴡɴᴇʀ : *ᴇᴛʜɪx xsɪᴅ*      
 │👤 ɴᴜᴍʙᴇʀ: 919142294671
 │📡 ᴘʟᴀᴛғᴏʀᴍ: *${os.platform()}*
