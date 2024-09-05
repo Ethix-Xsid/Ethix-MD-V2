@@ -1,13 +1,13 @@
 import { exec } from 'child_process';
 import fs from 'fs';
-import { getRandom } from '../../lib/myfunc.cjs';  // Assuming you have a utility function for generating random file names
+import { getRandom } from '../../lib/myfunc.cjs';
+import config from '../../config.cjs';
 
 const audioEffects = async (m, gss) => {
   try {
-    const prefixMatch = m.body.match(/^[\\/!#.]/);
-    const prefix = prefixMatch ? prefixMatch[0] : '/';
-    const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-    const text = m.body.slice(prefix.length + cmd.length).trim();
+    const prefix = config.PREFIX;
+const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+const text = m.body.slice(prefix.length + cmd.length).trim();
 
     const validCommands = ['bass', 'blown', 'deep', 'earrape', 'fast', 'fat', 'nightcore', 'reverse', 'robot', 'slow', 'smooth', 'tupai'];
     if (!validCommands.includes(cmd)) return;
