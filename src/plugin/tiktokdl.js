@@ -2,6 +2,7 @@ import pkg, { prepareWAMessageMedia } from '@whiskeysockets/baileys';
 const { generateWAMessageFromContent, proto } = pkg;
 import pkgg from 'nayan-media-downloader';
 const { tikdown } = pkgg;
+import config from '../../config.cjs';
 
 
 const searchResultsMap = new Map();
@@ -22,10 +23,9 @@ const tiktokCommand = async (m, Matrix) => {
 
   const selectedId = selectedListId || selectedButtonId;
 
-  const prefixMatch = m.body.match(/^[\\/!#.]/);
-  const prefix = prefixMatch ? prefixMatch[0] : '/';
-  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-  const text = m.body.slice(prefix.length + cmd.length).trim();
+  const prefix = config.PREFIX;
+const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+const text = m.body.slice(prefix.length + cmd.length).trim();
 
   const validCommands = ['tiktok', 'tt', 'ttdl'];
 
