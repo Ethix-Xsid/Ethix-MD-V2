@@ -1,12 +1,12 @@
 import { UploadFileUgu, TelegraPh } from '../uploader.js';
 import { writeFile, unlink } from 'fs/promises';
-
-const MAX_FILE_SIZE_MB = 60; // Maximum file size in megabytes
+import config from '../../config.cjs';
+const MAX_FILE_SIZE_MB = 60;
 
 const tourl = async (m, gss) => {
-  const prefixMatch = m.body.match(/^[\\/!#.]/);
-  const prefix = prefixMatch ? prefixMatch[0] : '/';
-  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+  const prefix = config.PREFIX;
+const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+const text = m.body.slice(prefix.length + cmd.length).trim();
   const validCommands = ['tourl', 'url'];
 
   if (validCommands.includes(cmd)) {
