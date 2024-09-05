@@ -1,11 +1,11 @@
 import Tesseract from 'tesseract.js';
 import { writeFile, unlink } from 'fs/promises';
+import config from '../../config.cjs';
 
 const givetextCommand = async (m, Matrix) => {
-  const prefixMatch = m.body.match(/^[\\/!#.]/);
-  const prefix = prefixMatch ? prefixMatch[0] : '/';
-  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-  const args = m.body.split(' ').slice(1); 
+  const prefix = config.PREFIX;
+const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+const arg = m.body.slice(prefix.length + cmd.length).trim();
 
   const validCommands = ['givetext', 'extract'];
 
