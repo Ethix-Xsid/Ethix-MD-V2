@@ -74,6 +74,7 @@ const test = async (m, Matrix) => {
 const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
        
        const mode = config.MODE === 'public' ? 'public' : 'private';
+       const pref = config.PREFIX;
            
         const validCommands = ['list', 'help', 'menu'];
 
@@ -94,7 +95,7 @@ const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0
 │👤 ɴᴜᴍʙᴇʀ: 919142294671
 │📡 ᴘʟᴀᴛғᴏʀᴍ: *${os.platform()}*
 │🛡 ᴍᴏᴅᴇ: *${mode}*
-│💫 ᴘʀᴇғɪx: *[Multi-Prefix]*
+│💫 ᴘʀᴇғɪx: [${pref}]
 ╰─────────────━┈⊷ `
             }),
             footer: proto.Message.InteractiveMessage.Footer.create({
