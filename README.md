@@ -20,7 +20,7 @@ Start by forking this repository to your own GitHub account. Click the button be
 
 You'll need a session ID to run the bot. Click the button below to obtain your session ID:
 
-<a href='https://negative-jacki-goutammallick516-35fc1e14.koyeb.app' target="_blank"><img alt='Get Session ID' src='https://img.shields.io/badge/Click here to get your session id-black?style=for-the-badge&logo=opencv&logoColor=red'/></a>
+<a href='http://app-2e98630a-a15c-4ba6-944e-42deb56069e3.cleverapps.io' target="_blank"><img alt='Get Session ID' src='https://img.shields.io/badge/Click here to get your session id-black?style=for-the-badge&logo=opencv&logoColor=red'/></a>
 
 ## 🚀 Deployment Options
 
