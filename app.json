@@ -51,6 +51,11 @@
       "description": "make it true if you want to reject call",
       "required": false,
       "value": ""
+    },
+    "PREFIX": {
+      "description": "Your Bot Prefix default (.)",
+      "required": false,
+      "value": ""
     }
     },
     "buildpacks": [
