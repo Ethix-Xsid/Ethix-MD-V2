@@ -58,7 +58,7 @@ const facebookCommand = async (m, Matrix) => {
         "name": "quick_reply",
         "buttonParamsJson": JSON.stringify({
           display_text: `📥 Download ${video.resolution}`,
-          id: `media_${index}_${fbSearchIndex}`
+          id: `fbmedia_${index}_${fbSearchIndex}`
         })
       }));
 
@@ -67,7 +67,7 @@ const facebookCommand = async (m, Matrix) => {
         rows: [{
           title: `📥 Download ${video.resolution}`,
           description: `Resolution: ${video.resolution}`,
-          id: `media_${fbSearchIndex}_${video.resolution}`
+          id: `fbmedia_${fbSearchIndex}_${video.resolution}`
         }]
       }));
 
@@ -83,7 +83,7 @@ const facebookCommand = async (m, Matrix) => {
                 text: `*ETHIX-MD FACEBOOK POST DOWNLOADER*\n\n> *TITLE*: ${fbData.title}`
               }),
               footer: proto.Message.InteractiveMessage.Footer.create({
-                text: "© Powered By Ethix-MD"
+                text: "© ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴇᴛʜɪx-ᴍᴅ"
               }),
               header: proto.Message.InteractiveMessage.Header.create({
                 ...(await prepareWAMessageMedia({ image: { url: fbData.thumbnail } }, { upload: Matrix.waUploadToServer })),
@@ -96,6 +96,7 @@ const facebookCommand = async (m, Matrix) => {
                 buttons
               }),
               contextInfo: {
+                quotedMessage: m.message,
                 mentionedJid: [m.sender],
                 forwardingScore: 9999,
                 isForwarded: true,
@@ -117,7 +118,7 @@ const facebookCommand = async (m, Matrix) => {
       await m.React("❌");
     }
   } else if (selectedId) { 
-    if (selectedId.startsWith('media_')) {
+    if (selectedId.startsWith('fbmedia_')) {
       const parts = selectedId.split('_');
       const qualityIndex = parseInt(parts[1]);
       const key = parseInt(parts[2]);
@@ -145,7 +146,7 @@ const facebookCommand = async (m, Matrix) => {
             content = { 
               video: finalMediaBuffer, 
               mimetype: 'video/mp4', 
-              caption: '> © Powered by Ethix-MD',
+              caption: '> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴇᴛʜɪx-ᴍᴅ',
             };
             await Matrix.sendMessage(m.from, content, { quoted: m });
           } else {
