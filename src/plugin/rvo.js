@@ -1,13 +1,14 @@
 import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 import fs from 'fs';
+import config from '../../config.cjs';
 
 const rvo = async (m, sock) => {
   try {
-    console.log('Quoted message:', m.quoted); // Logging statement to check the quoted message
+    console.log('Quoted message:', m.quoted);
 
-    const prefixMatch = m.body.match(/^[\\/!#.]/);
-    const prefix = prefixMatch ? prefixMatch[0] : '/';
-    const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+    const prefix = config.PREFIX;
+const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+const text = m.body.slice(prefix.length + cmd.length).trim();
 
     const validCommands = ['rvo', 'vv', 'readviewonce'];
     if (!validCommands.includes(cmd)) return;
