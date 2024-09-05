@@ -18,13 +18,11 @@ const args = m.body.slice(prefix.length + cmd.length).trim();
     if (m.quoted) {
       if (m.quoted.mtype === 'imageMessage') {
         try {
-          const media = await m.quoted.download(); // Download the media from the quoted message
+          const media = await m.quoted.download();
           if (!media) throw new Error('Failed to download media.');
 
           const filePath = `./${Date.now()}.png`;
-          await writeFile(filePath, media); // Save the downloaded media to a file
-
-          // Perform OCR using Tesseract.js
+          await writeFile(filePath, media);
           const { data: { text: extractedText } } = await Tesseract.recognize(filePath, 'eng', {
             logger: m => console.log(m)
           });
@@ -33,10 +31,10 @@ const args = m.body.slice(prefix.length + cmd.length).trim();
           const translatedText = result[0];
 
           const responseMessage = `${targetLang}:\n\n${translatedText}`;
-          await sock.sendMessage(m.from, { text: responseMessage }, { quoted: m }); // Send the extracted and translated text back to the user
+          await sock.sendMessage(m.from, { text: responseMessage }, { quoted: m });
         } catch (error) {
           console.error("Error extracting and translating text from image:", error);
-          await sock.sendMessage(m.from, { text: 'Error extracting and translating text from image.' }, { quoted: m }); // Error handling
+          await sock.sendMessage(m.from, { text: 'Error extracting and translating text from image.' }, { quoted: m }); 
         }
       } else if (m.quoted.text) {
         try {
@@ -45,10 +43,10 @@ const args = m.body.slice(prefix.length + cmd.length).trim();
           const translatedText = result[0];
 
           const responseMessage = `${targetLang}:\n\n${translatedText}`;
-          await sock.sendMessage(m.from, { text: responseMessage }, { quoted: m }); // Send the translated text back to the user
+          await sock.sendMessage(m.from, { text: responseMessage }, { quoted: m }); 
         } catch (error) {
           console.error("Error translating quoted text:", error);
-          await sock.sendMessage(m.from, { text: 'Error translating quoted text.' }, { quoted: m }); // Error handling
+          await sock.sendMessage(m.from, { text: 'Error translating quoted text.' }, { quoted: m }); 
         }
       }
     } else if (text && targetLang) {
