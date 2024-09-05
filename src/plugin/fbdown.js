@@ -1,6 +1,7 @@
 import pkg, { prepareWAMessageMedia } from '@whiskeysockets/baileys';
 const { generateWAMessageFromContent, proto } = pkg;
 import getFBInfo from '@xaviabot/fb-downloader';
+import config from '../../config.cjs';
 
 const fbSearchResultsMap = new Map();
 let fbSearchIndex = 1;
@@ -20,10 +21,9 @@ const facebookCommand = async (m, Matrix) => {
 
   const selectedId = selectedListId || selectedButtonId;
 
-  const prefixMatch = m.body.match(/^[\\/!#.]/);
-  const prefix = prefixMatch ? prefixMatch[0] : '/';
-  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-  const text = m.body.slice(prefix.length + cmd.length).trim();
+  const prefix = config.PREFIX;
+const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+const text = m.body.slice(prefix.length + cmd.length).trim();
 
   const validCommands = ['facebook', 'fb', 'fbdl'];
 
