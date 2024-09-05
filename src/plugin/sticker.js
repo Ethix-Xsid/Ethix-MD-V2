@@ -2,8 +2,7 @@ import fs from 'fs/promises';
 import config from '../../config.cjs';
 
 const stickerCommand = async (m, gss) => {
-  const prefixMatch = m.body.match(/^[\\/!#.]/);
-  const prefix = prefixMatch ? prefixMatch[0] : '/';
+  const prefix = config.PREFIX;
   const [cmd, arg] = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ') : ['', ''];
 
   const packname = global.packname || "𝐄𝐭𝐡𝐢𝐱-𝐌𝐃";
