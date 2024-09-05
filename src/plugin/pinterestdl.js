@@ -1,12 +1,12 @@
 import axios from 'axios';
+import config from '../../config.cjs';
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const imageCommand = async (m, sock) => {
-  const prefixMatch = m.body.match(/^[\\/!#.]/);
-  const prefix = prefixMatch ? prefixMatch[0] : '/';
-  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-  const args = m.body.slice(prefix.length + cmd.length).trim();
+  const prefix = config.PREFIX;
+const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+const arg = m.body.slice(prefix.length + cmd.length).trim();
   const query = args;
 
   const validCommands = ['pintrest', 'pintrestdl'];
