@@ -1,7 +1,8 @@
 import fs from 'fs';
 import acrcloud from 'acrcloud';
+import config from '../../config.cjs';
 
-// Initialize ACRCloud client with your credentials
+
 const acr = new acrcloud({
 host: 'identify-eu-west-1.acrcloud.com',
 access_key: '716b4ddfa557144ce0a459344fe0c2c9',
@@ -10,9 +11,9 @@ access_secret: 'Lz75UbI8g6AzkLRQgTgHyBlaQq9YT5wonr3xhFkf'
 
 const shazam = async (m, gss) => {
   try {
-    const prefixMatch = m.body.match(/^[\\/!#.]/);
-    const prefix = prefixMatch ? prefixMatch[0] : '/';
-    const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+    const prefix = config.PREFIX;
+const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+const text = m.body.slice(prefix.length + cmd.length).trim();
 
     const validCommands = ['shazam', 'find', 'whatmusic'];
     if (!validCommands.includes(cmd)) return;
