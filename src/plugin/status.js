@@ -1,4 +1,5 @@
 import fs from 'fs';
+import config from '../../config.cjs';
 
 const handleGreeting = async (m, gss) => {
   try {
