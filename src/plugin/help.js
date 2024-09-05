@@ -3,8 +3,7 @@ import fs from 'fs';
 import os from 'os';
 import pkg, { prepareWAMessageMedia } from '@whiskeysockets/baileys';
 const { generateWAMessageFromContent, proto } = pkg;
-import dotenv from 'dotenv';
-dotenv.config();
+import config from '../../config.cjs';
 
 // Get total memory and free memory in bytes
 const totalMemoryBytes = os.totalmem();
@@ -74,7 +73,7 @@ const test = async (m, Matrix) => {
   const prefix = /^[\\/!#.]/gi.test(m.body) ? m.body.match(/^[\\/!#.]/gi)[0] : '.';
         const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).toLowerCase() : '';
        
-       const mode = process.env.MODE === 'public' ? 'public' : 'private';
+       const mode = config.MODE === 'public' ? 'public' : 'private';
            
         const validCommands = ['list', 'help', 'menu'];
 
