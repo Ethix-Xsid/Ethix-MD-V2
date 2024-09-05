@@ -1,5 +1,6 @@
 import pkg, { prepareWAMessageMedia } from '@whiskeysockets/baileys';
 const { generateWAMessageFromContent, proto } = pkg;
+import config from '../../config.cjs';
 
 const alive = async (m, Matrix) => {
   const uptimeSeconds = process.uptime();
