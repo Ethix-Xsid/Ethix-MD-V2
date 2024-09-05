@@ -1,6 +1,4 @@
 import config from '../../config.cjs';
-import dotenv from 'dotenv';
-dotenv.config();
 
 const modeCommand = async (m, Matrix) => {
     const botNumber = await Matrix.decodeJid(Matrix.user.id);
@@ -19,11 +17,11 @@ const text = m.body.slice(prefix.length + cmd.length).trim();
         if (['public', 'private'].includes(text)) {
             if (text === 'public') {
                 Matrix.public = true;
-                process.env.MODE = "public";
+               config.MODE = "public";
                 m.reply('Mode has been changed to public.');
             } else if (text === 'private') {
                 Matrix.public = false;
-                process.env.MODE = "private";
+                config.MODE = "private";
                 m.reply('Mode has been changed to private.');
             } else {
                 m.reply("Usage:\n.Mode public/private");
