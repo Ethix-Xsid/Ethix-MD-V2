@@ -2,14 +2,14 @@ import qrcode from 'qrcode';
 import fs from 'fs';
 import path from 'path';
 import PDFDocument from 'pdfkit';
+import config from '../../config.cjs';
 
 const toqr = async (m, gss) => {
   try {
     const botNumber = await gss.decodeJid(gss.user.id);
-    const prefixMatch = m.body.match(/^[\\/!#.]/);
-    const prefix = prefixMatch ? prefixMatch[0] : '/';
-    const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-    const text = m.body.slice(prefix.length + cmd.length).trim();
+    const prefix = config.PREFIX;
+const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+const text = m.body.slice(prefix.length + cmd.length).trim();
 
     const validCommands = ['toqr'];
 
