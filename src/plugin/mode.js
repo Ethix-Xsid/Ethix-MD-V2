@@ -17,9 +17,11 @@ const modeCommand = async (m, Matrix) => {
         if (['public', 'private'].includes(text)) {
             if (text === 'public') {
                 Matrix.public = true;
+                process.env.MODE = "public";
                 m.reply('Mode has been changed to public.');
             } else if (text === 'private') {
                 Matrix.public = false;
+                process.env.MODE = "private";
                 m.reply('Mode has been changed to private.');
             } else {
                 m.reply("Usage:\n.Mode public/private");
