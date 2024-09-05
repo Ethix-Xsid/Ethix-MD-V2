@@ -1,10 +1,9 @@
 import config from '../../config.cjs';
 
 const gcEvent = async (m, Matrix) => {
-  const prefixMatch = m.body.match(/^[\\/!#.]/);
-  const prefix = prefixMatch ? prefixMatch[0] : '/';
-  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-  const text = m.body.slice(prefix.length + cmd.length).trim().toLowerCase();
+  const prefix = config.PREFIX;
+const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+const text = m.body.slice(prefix.length + cmd.length).trim();
 
   if (cmd === 'welcome') {
     if (!m.isGroup) return m.reply("*📛 THIS COMMAND CAN ONLY BE USED IN GROUPS*");
