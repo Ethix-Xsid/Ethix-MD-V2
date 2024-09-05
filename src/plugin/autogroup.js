@@ -1,13 +1,14 @@
 import cron from 'node-cron';
 import moment from 'moment-timezone';
+import config from '../../config.cjs';
 
 let scheduledTasks = {};
 
 const groupSetting = async (m, gss) => {
   try {
-    const prefixMatch = m.body.match(/^[\\/!#.]/);
-    const prefix = prefixMatch ? prefixMatch[0] : '/';
-    const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+    const prefix = config.PREFIX;
+const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+const text = m.body.slice(prefix.length + cmd.length).trim();
 
     const validCommands = ['group'];
     if (!validCommands.includes(cmd)) return;
