@@ -63,6 +63,7 @@ _________________________________________
             buttons
           }),
           contextInfo: {
+                  quotedMessage: m.message,
                   mentionedJid: [m.sender], 
                   forwardingScore: 999,
                   isForwarded: true,
