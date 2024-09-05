@@ -199,6 +199,7 @@ let mode = ethix.public ? 'public' : 'private';
               ],
             }),
             contextInfo: {
+                  quotedMessage: m.message,
                   mentionedJid: [m.sender], 
                   forwardingScore: 999,
                   isForwarded: true,
@@ -349,7 +350,7 @@ let mode = ethix.public ? 'public' : 'private';
        let { key } = await Matrix.sendMessage(m.from, {
   image: fs.readFileSync('./src/ethix.jpg'), 
   caption: str, 
-  contextInfo: {
+  contextInfo: { 
                   mentionedJid: [m.sender], 
                   forwardingScore: 999,
                   isForwarded: true,
