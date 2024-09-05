@@ -1,17 +1,17 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import fetch from 'node-fetch'; // Make sure to use node-fetch
+import fetch from 'node-fetch';
 import pkg from '@whiskeysockets/baileys';
 const { generateWAMessageFromContent, proto } = pkg;
+import config from '../../config.cjs';
 
-// Get the absolute path for the chat history file
+
 const __filename = new URL(import.meta.url).pathname;
 const __dirname = path.dirname(__filename);
 const chatHistoryFile = path.resolve(__dirname, '../mistral_history.json');
 
 const mistralSystemPrompt = "you are a good assistant.";
 
-// Utility function to read chat history from file
 async function readChatHistoryFromFile() {
     try {
         const data = await fs.readFile(chatHistoryFile, "utf-8");
@@ -21,7 +21,6 @@ async function readChatHistoryFromFile() {
     }
 }
 
-// Utility function to write chat history to file
 async function writeChatHistoryToFile(chatHistory) {
     try {
         await fs.writeFile(chatHistoryFile, JSON.stringify(chatHistory, null, 2));
@@ -30,7 +29,6 @@ async function writeChatHistoryToFile(chatHistory) {
     }
 }
 
-// Utility function to update chat history
 async function updateChatHistory(chatHistory, sender, message) {
     if (!chatHistory[sender]) {
         chatHistory[sender] = [];
@@ -42,7 +40,6 @@ async function updateChatHistory(chatHistory, sender, message) {
     await writeChatHistoryToFile(chatHistory);
 }
 
-// Utility function to delete user's chat history
 async function deleteChatHistory(chatHistory, userId) {
     delete chatHistory[userId];
     await writeChatHistoryToFile(chatHistory);
@@ -58,10 +55,9 @@ const mistral = async (m, Matrix) => {
         return;
     }
 
-    const prefixMatch = m.body.match(/^[\\/!#.]/);
-    const prefix = prefixMatch ? prefixMatch[0] : '/';
-    const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-    const prompt = m.body.slice(prefix.length + cmd.length).trim().toLowerCase();
+    const prefix = config.PREFIX;
+const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+const prompt = m.body.slice(prefix.length + cmd.length).trim();
 
     const validCommands = ['ai', 'gpt', 'mistral'];
 
