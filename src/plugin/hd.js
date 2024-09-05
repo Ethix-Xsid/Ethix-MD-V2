@@ -1,4 +1,5 @@
 import { createRequire } from 'module';
+import config from '../../config.cjs';
 import path from 'path';
 
 const require = createRequire(import.meta.url);
@@ -7,10 +8,10 @@ const __dirname = path.dirname(__filename);
 const reminiPath = path.resolve(__dirname, '../remini.cjs');
 const { remini } = require(reminiPath);
 
-const tourl = async (m, gss) => {
-  const prefixMatch = m.body.match(/^[\\/!#.]/);
-  const prefix = prefixMatch ? prefixMatch[0] : '/';
-  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+const tohd = async (m, gss) => {
+  const prefix = config.PREFIX;
+const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+const text = m.body.slice(prefix.length + cmd.length).trim();
   const validCommands = ['hdr', 'hd', 'remini', 'enhance', 'upscale'];
 
   if (validCommands.includes(cmd)) {
@@ -31,4 +32,4 @@ const tourl = async (m, gss) => {
   }
 };
 
-export default tourl;
+export default tohd;
