@@ -114,14 +114,14 @@ const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0
           "name": "quick_reply",
           "buttonParamsJson": JSON.stringify({
             display_text: "ALIVE",
-            id: `.alive`
+            id: `${prefix}alive`
           })
         },
         {
           "name": "quick_reply",
           "buttonParamsJson": JSON.stringify({
             display_text: "PING",
-            id: `.ping`
+            id: `${prefix}ping`
           })
         },
                 {
