@@ -1,3 +1,5 @@
+import config from '../../config.cjs';
+
 const report = async (m, gss) => {
   try {
     const prefix = config.PREFIX;
