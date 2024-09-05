@@ -3,7 +3,7 @@ import translate from 'translate-google-api';
 import { writeFile } from 'fs/promises';
 import config from '../../config.cjs';
 
-const translateCommand = async (m, sock, config) => {
+const translateCommand = async (m, sock) => {
   const prefix = config.PREFIX;
 const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
 const args = m.body.slice(prefix.length + cmd.length).trim();
