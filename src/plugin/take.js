@@ -1,8 +1,8 @@
 import fs from 'fs/promises';
+import config from '../../config.cjs';
 
 const handleTakeCommand = async (m, gss) => {
-  const prefixMatch = m.body.match(/^[\\/!#.]/);
-  const prefix = prefixMatch ? prefixMatch[0] : '/';
+  const prefix = config.PREFIX;
   const [cmd, ...args] = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ') : ['', ''];
 
   if (cmd !== 'take') return;
