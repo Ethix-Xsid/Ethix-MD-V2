@@ -3,6 +3,8 @@ import fs from 'fs';
 import os from 'os';
 import pkg, { prepareWAMessageMedia } from '@whiskeysockets/baileys';
 const { generateWAMessageFromContent, proto } = pkg;
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Get total memory and free memory in bytes
 const totalMemoryBytes = os.totalmem();
