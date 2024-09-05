@@ -70,8 +70,8 @@ const test = async (m, Matrix) => {
   }
   const selectedId = selectedListId || selectedButtonId;
   
-  const prefix = /^[\\/!#.]/gi.test(m.body) ? m.body.match(/^[\\/!#.]/gi)[0] : '.';
-        const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).toLowerCase() : '';
+  const prefix = config.PREFIX;
+const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
        
        const mode = config.MODE === 'public' ? 'public' : 'private';
            
