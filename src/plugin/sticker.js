@@ -3,7 +3,9 @@ import config from '../../config.cjs';
 
 const stickerCommand = async (m, gss) => {
   const prefix = config.PREFIX;
-  const [cmd, arg] = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ') : ['', ''];
+  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+  const text = m.body.slice(prefix.length + cmd.length).trim();
+  const arg = text.split(' ')[0]; 
 
   const packname = global.packname || "𝐄𝐭𝐡𝐢𝐱-𝐌𝐃";
   const author = global.author || "🥵💫👿";
@@ -23,17 +25,20 @@ const stickerCommand = async (m, gss) => {
     return;
   }
 
-  // Auto sticker functionality using config
   if (config.AUTO_STICKER && !m.key.fromMe) {
     if (m.type === 'imageMessage') {
       let mediac = await m.download();
-      await gss.sendImageAsSticker(m.from, mediac, m, { packname, author });
-      console.log(`Auto sticker detected`);
-      return;
+      if (mediac) {
+        await gss.sendImageAsSticker(m.from, mediac, m, { packname, author });
+        console.log(`Auto sticker detected and sent`);
+        return;
+      }
     } else if (m.type === 'videoMessage' && m.msg.seconds <= 11) {
       let mediac = await m.download();
-      await gss.sendVideoAsSticker(m.from, mediac, m, { packname, author });
-      return;
+      if (mediac) {
+        await gss.sendVideoAsSticker(m.from, mediac, m, { packname, author });
+        return;
+      }
     }
   }
 
@@ -41,11 +46,13 @@ const stickerCommand = async (m, gss) => {
     const quoted = m.quoted || {};
 
     if (!quoted || (quoted.mtype !== 'imageMessage' && quoted.mtype !== 'videoMessage')) {
-      return m.reply(`Send/Reply with an image or video to convert into a sticker ${prefix + cmd}`);
+      return m.reply(`Send/Reply with an image or video to convert into a sticker using ${prefix + cmd}`);
     }
 
     const media = await quoted.download();
-    if (!media) throw new Error('Failed to download media.');
+    if (!media) {
+      return m.reply('Failed to download the media.');
+    }
 
     const filePath = `./${Date.now()}.${quoted.mtype === 'imageMessage' ? 'png' : 'mp4'}`;
     await fs.writeFile(filePath, media);
@@ -56,6 +63,7 @@ const stickerCommand = async (m, gss) => {
     } else if (quoted.mtype === 'videoMessage') {
       await gss.sendVideoAsSticker(m.from, filePath, m, { packname, author });
     }
+    await fs.unlink(filePath);
   }
 };
 
