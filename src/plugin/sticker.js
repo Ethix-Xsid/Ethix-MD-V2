@@ -2,14 +2,16 @@ import fs from 'fs-extra';
 import config from '../../config.cjs';
 
 const stickerCommand = async (m, gss) => {
-  const prefixMatch = m.body.match(/^[\\/!#.]/);
-  const prefix = prefixMatch ? prefixMatch[0] : '/';
-  const [cmd, arg] = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ') : ['', ''];
+  const prefix = config.PREFIX;
+  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+  const text = m.body.slice(prefix.length + cmd.length).trim();
 
   const packname = global.packname || "𝐄𝐭𝐡𝐢𝐱-𝐌𝐃";
   const author = global.author || "🥵💫👿";
 
   const validCommands = ['sticker', 's', 'autosticker'];
+
+  const arg = text.split(' ')[0];
 
   if (cmd === 'autosticker') {
     if (arg === 'on') {
@@ -24,16 +26,23 @@ const stickerCommand = async (m, gss) => {
     return;
   }
 
-  // Auto sticker functionality using config
   if (config.AUTO_STICKER && !m.key.fromMe) {
     if (m.type === 'imageMessage') {
-      let mediac = await m.download();
-      await gss.sendImageAsSticker(m.from, mediac, m, { packname, author });
-      console.log(`Auto sticker detected`);
+      let media = await m.download();
+      if (media) {
+        await gss.sendImageAsSticker(m.from, media, m, { packname, author });
+        console.log('Auto sticker sent');
+      } else {
+        console.error('Failed to download media for auto-sticker.');
+      }
       return;
     } else if (m.type === 'videoMessage' && m.msg.seconds <= 11) {
-      let mediac = await m.download();
-      await gss.sendVideoAsSticker(m.from, mediac, m, { packname, author });
+      let media = await m.download();
+      if (media) {
+        await gss.sendVideoAsSticker(m.from, media, m, { packname, author });
+      } else {
+        console.error('Failed to download video for auto-sticker.');
+      }
       return;
     }
   }
@@ -42,24 +51,25 @@ const stickerCommand = async (m, gss) => {
     const quoted = m.quoted || {};
 
     if (!quoted || (quoted.mtype !== 'imageMessage' && quoted.mtype !== 'videoMessage')) {
-      return m.reply(`Send/Reply with an image or video to convert into a sticker ${prefix + cmd}`);
+      return m.reply(`Send/Reply with an image or video to convert into a sticker using ${prefix + cmd}`);
     }
 
-    const media = await quoted.download();
-    if (!media) throw new Error('Failed to download media.');
-
-    const filePath = `./${Date.now()}.${quoted.mtype === 'imageMessage' ? 'png' : 'mp4'}`;
-    await fs.writeFile(filePath, media);
-
     try {
+      const media = await quoted.download();
+      if (!media) throw new Error('Failed to download media.');
       if (quoted.mtype === 'imageMessage') {
-        const stickerBuffer = await fs.readFile(filePath);
-        await gss.sendImageAsSticker(m.from, stickerBuffer, m, { packname, author });
-      } else if (quoted.mtype === 'videoMessage') {
-        await gss.sendVideoAsSticker(m.from, filePath, m, { packname, author });
+        await gss.sendImageAsSticker(m.from, media, m, { packname, author });
+        m.reply('Sticker created successfully!');
       }
-    } finally {
-      await fs.unlink(filePath);
+      else if (quoted.mtype === 'videoMessage' && quoted.msg.seconds <= 11) {
+        await gss.sendVideoAsSticker(m.from, media, m, { packname, author });
+        m.reply('Sticker created successfully!');
+      } else {
+        m.reply('Video too long. Please send a video that is less than 11 seconds.');
+      }
+    } catch (error) {
+      console.error(error);
+      m.reply(`Error: ${error.message}`);
     }
   }
 };
