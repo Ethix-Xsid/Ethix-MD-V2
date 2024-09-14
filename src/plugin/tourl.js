@@ -1,17 +1,42 @@
-import { UploadFileUgu, TelegraPh } from '../uploader.js';
+import fetch from 'node-fetch';
+import FormData from 'form-data';
+import { fileTypeFromBuffer } from 'file-type';
 import { writeFile, unlink } from 'fs/promises';
-import config from '../../config.cjs';
-const MAX_FILE_SIZE_MB = 60;
 
-const tourl = async (m, gss) => {
-  const prefix = config.PREFIX;
-const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-const text = m.body.slice(prefix.length + cmd.length).trim();
-  const validCommands = ['tourl', 'url'];
+const MAX_FILE_SIZE_MB = 200;
+async function uploadMedia(buffer) {
+  try {
+    const { ext } = await fileTypeFromBuffer(buffer);
+    const bodyForm = new FormData();
+    bodyForm.append("fileToUpload", buffer, "file." + ext);
+    bodyForm.append("reqtype", "fileupload");
+
+    const res = await fetch("https://catbox.moe/user/api.php", {
+      method: "POST",
+      body: bodyForm,
+    });
+
+    if (!res.ok) {
+      throw new Error(`Upload failed with status ${res.status}: ${res.statusText}`);
+    }
+
+    const data = await res.text();
+    return data;
+  } catch (error) {
+    console.error("Error during media upload:", error);
+    throw new Error('Failed to upload media');
+  }
+}
+
+const tourl = async (m, bot) => {
+  const prefixMatch = m.body.match(/^[\\/!#.]/);
+  const prefix = prefixMatch ? prefixMatch[0] : '/';
+  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+  const validCommands = ['tourl', 'geturl', 'upload', 'url'];
 
   if (validCommands.includes(cmd)) {
     if (!m.quoted || !['imageMessage', 'videoMessage', 'audioMessage'].includes(m.quoted.mtype)) {
-      return m.reply(`Send/Reply with an image, video, or audio to upload ${prefix + cmd}`);
+      return m.reply(`Send/Reply/Quote an image, video, or audio to upload \n*${prefix + cmd}*`);
     }
 
     try {
@@ -29,62 +54,40 @@ const text = m.body.slice(prefix.length + cmd.length).trim();
       const loadingMessageCount = loadingMessages.length;
       let currentMessageIndex = 0;
 
-      const { key } = await gss.sendMessage(m.from, { text: loadingMessages[currentMessageIndex] }, { quoted: m });
+      const { key } = await bot.sendMessage(m.from, { text: loadingMessages[currentMessageIndex] }, { quoted: m });
 
       const loadingInterval = setInterval(() => {
         currentMessageIndex = (currentMessageIndex + 1) % loadingMessageCount;
-        gss.relayMessage(m.from, {
-          protocolMessage: {
-            key: key,
-            type: 14,
-            editedMessage: {
-              conversation: loadingMessages[currentMessageIndex],
-            },
-          },
-        }, {});
+        bot.sendMessage(m.from, { text: loadingMessages[currentMessageIndex] }, { quoted: m, messageId: key });
       }, 500);
 
-      const media = await m.quoted.download(); // Download the media from the quoted message
+      const media = await m.quoted.download();
       if (!media) throw new Error('Failed to download media.');
 
-      const fileSizeMB = media.length / (1024 * 1024); // Calculate file size in megabytes
+      const fileSizeMB = media.length / (1024 * 1024);
       if (fileSizeMB > MAX_FILE_SIZE_MB) {
         clearInterval(loadingInterval);
         return m.reply(`File size exceeds the limit of ${MAX_FILE_SIZE_MB}MB.`);
       }
-
-      const extension = getFileExtension(m.quoted.mtype);
-      if (!extension) throw new Error('Unknown media type.');
-
-      const filePath = `./${Date.now()}.${extension}`; // Save the media with proper extension
-      await writeFile(filePath, media);
-
-      let response;
-      if (m.quoted.mtype === 'imageMessage') {
-        response = await TelegraPh(filePath); // Pass the file path to TelegraPh
-      } else {
-        response = await UploadFileUgu(filePath); // Pass the file path to UploadFileUgu
-      }
+      const mediaUrl = await uploadMedia(media);
 
       clearInterval(loadingInterval);
+      await bot.sendMessage(m.from, { text: '✅ Loading complete.' }, { quoted: m });
 
-      // Replace loading animation with "Loading complete" message
-      await gss.relayMessage(m.from, {
-        protocolMessage: {
-          key: key,
-          type: 14,
-          editedMessage: {
-            conversation: '✅ Loading complete.',
-          },
-        },
-      }, {});
+      const mediaType = getMediaType(m.quoted.mtype);
+      if (mediaType === 'audio') {
+        const message = {
+          text: `*Hey ${m.pushName} Here Is Your Audio URL*\n*Url:* ${mediaUrl}`,
+        };
+        await bot.sendMessage(m.from, message, { quoted: m });
+      } else {
+        const message = {
+          [mediaType]: { url: mediaUrl },
+          caption: `*Hey ${m.pushName} Here Is Your Media*\n*Url:* ${mediaUrl}`,
+        };
+        await bot.sendMessage(m.from, message, { quoted: m });
+      }
 
-      const mediaUrl = response.url || response; // Extract the URL from the response
-
-      // Only send the URL as a reply
-      await m.reply(`*Hey ${m.pushName} Here Is Your Media*\n*url:* ${mediaUrl}`);
-
-      await unlink(filePath); // Delete the downloaded media file
     } catch (error) {
       console.error('Error processing media:', error);
       m.reply('Error processing media.');
@@ -92,21 +95,6 @@ const text = m.body.slice(prefix.length + cmd.length).trim();
   }
 };
 
-// Function to get the file extension based on media type
-const getFileExtension = (mtype) => {
-  switch (mtype) {
-    case 'imageMessage':
-      return 'jpg';
-    case 'videoMessage':
-      return 'mp4';
-    case 'audioMessage':
-      return 'mp3';
-    default:
-      return null;
-  }
-};
-
-// Function to get the media type for messaging
 const getMediaType = (mtype) => {
   switch (mtype) {
     case 'imageMessage':
