@@ -1,5 +1,4 @@
 import { createRequire } from 'module';
-import config from '../../config.cjs';
 import path from 'path';
 
 const require = createRequire(import.meta.url);
@@ -9,10 +8,10 @@ const reminiPath = path.resolve(__dirname, '../remini.cjs');
 const { remini } = require(reminiPath);
 
 const tohd = async (m, gss) => {
-  const prefix = config.PREFIX;
-const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-const text = m.body.slice(prefix.length + cmd.length).trim();
-  const validCommands = ['hdr', 'hd', 'remini', 'enhance', 'upscale'];
+  const prefixMatch = m.body.match(/^[\\/!#.]/);
+  const prefix = prefixMatch ? prefixMatch[0] : '/';
+  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+  const validCommands = ['hdr2', 'hd2', 'remini2', 'enhance2', 'upscale2'];
 
   if (validCommands.includes(cmd)) {
     if (!m.quoted || m.quoted.mtype !== 'imageMessage') {
@@ -22,8 +21,8 @@ const text = m.body.slice(prefix.length + cmd.length).trim();
     const media = await m.quoted.download();
 
     try {
-        let proses = await remini(media, "enhance"); // Call remini directly
-        gss.sendMessage(m.from, { image: proses, caption: `> *Hey ${m.pushName} Here Is Your Enhanced Image By Ethix-MD*` }, { quoted: m });
+        let proses = await remini(media, "enhance");
+        gss.sendMessage(m.from, { image: proses, caption: `> *Hey ${m.pushName} Here Is Your Enhanced Image\nᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴇᴛʜɪx-ᴍᴅ*` }, { quoted: m });
       
     } catch (error) {
       console.error('Error processing media:', error);
