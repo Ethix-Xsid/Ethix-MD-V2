@@ -117,7 +117,7 @@ const prompt = m.body.slice(prefix.length + cmd.length).trim();
                                     text: answer
                                 }),
                                 footer: proto.Message.InteractiveMessage.Footer.create({
-                                    text: "> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴇᴛʜɪx-ᴍᴅ"
+                                    text: "> POWERED BY AFZAAL KHAN"
                                 }),
                                 header: proto.Message.InteractiveMessage.Header.create({
                                     title: "",
