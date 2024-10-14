@@ -1,0 +1,5 @@
+build_script:
+  - cmd: npm install
+
+test_script:
+  - cmd: npm test

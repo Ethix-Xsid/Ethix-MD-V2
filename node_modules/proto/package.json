@@ -1,0 +1,18 @@
+{"name":"proto",
+ "version":"1.0.19",
+ "main":"proto.js",
+ "description": "A prototype-based inheritance library that makes it easy to create objects and inheritance hierarchies without losing the power of javascript's prototype system.",
+ "keywords": ["class", "inheritance", "prototype", "javascript", "superclass", "parent", "child", "inherit"],
+ "dependencies":{
+ },
+ "devDependencies": {
+     "deadunit": "",
+     "build-modules":"2.0.3"
+ },
+ "repository": {
+   "type": "git",
+   "url": "git://github.com/fresheneesz/proto"
+ },
+ "scripts": {
+ }
+}
