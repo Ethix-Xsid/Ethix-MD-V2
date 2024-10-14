@@ -53,12 +53,12 @@ const handleRepoCommand = async (m, Matrix, repoUrl) => {
               text: messageText,
             }),
             footer: proto.Message.InteractiveMessage.Footer.create({
-              text: '© ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴇᴛʜɪx-ᴍᴅ',
+              text: 'POWERED BY AFZAAL KHAN',
             }),
             header: proto.Message.InteractiveMessage.Header.create({
               ...(await prepareWAMessageMedia({
                 image: {
-                  url: 'https://telegra.ph/file/fbbe1744668b44637c21a.jpg',
+                  url: 'https://github.com/khanak1/Alexa/blob/main/20241001_180820.jpg',
                 },
               }, { upload: Matrix.waUploadToServer })),
               title: '',
@@ -86,7 +86,7 @@ const handleRepoCommand = async (m, Matrix, repoUrl) => {
                   name: 'cta_url',
                   buttonParamsJson: JSON.stringify({
                     display_text: 'Join Our Community',
-                    url: 'https://whatsapp.com/channel/0029VaWJMi3GehEE9e1YsI1S',
+                    url: 'https://whatsapp.com/channel/0029VaHJSUeC6Zvq89X23w2k',
                   }),
                 },
               ],

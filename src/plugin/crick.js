@@ -28,8 +28,8 @@ const text = m.body.slice(prefix.length + cmd.length).trim();
       const result = response.data;
 
       let formattedResult = `╭══════════════•∞•══╮\n`;
-      formattedResult += `│⿻   *𝞢𝙏𝞖𝞘𝞦-𝞛𝘿 😎 🔥*\n`;
-      formattedResult += `│⿻   *LIVE MATCH INFO* ✨\n`;
+      formattedResult += `│⿻   *Sarkar-AK 😎🔥*\n`;
+      formattedResult += `│⿻   *Live Match Score* ✨\n`;
       formattedResult += `│⿻\n`;
 
       if (result.code === 200) {

@@ -1,0 +1,49 @@
+<!-- NOTE: this won't work without being served from a server -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.16/require.min.js'></script>
+
+<script>
+    "use strict";
+
+    require.config({
+        paths: {
+            "proto": '../generatedBuilds/proto.amd.min.js'
+        }
+    })
+
+    require(['proto'], function(proto) {
+        var A = proto(function() {
+            this.init = function(val) {
+              this.val = val;
+            }
+            this.method1 = function(x, y, z) {
+              this.x = x;
+              this.y = y;
+              this.z = z;
+            }
+        });
+
+        var B = proto(A, function(superclass) {
+            this.method1 = function(y, z) {
+              superclass.method1.call(this, 'x', y, z);
+            }
+        });
+
+        var C = proto(B, function(superclass) {
+            this.method1 = function(z) {
+              superclass.method1.call(this, 'y', z);
+            }
+        });
+
+        var a = new A("a");
+        a.method1("x", "y", "z");
+
+        var b = new B("b");
+        b.method1("y", "z");
+
+        var c = new C("c");
+        c.method1("z");
+
+        console.log("done")
+    })
+
+</script>
