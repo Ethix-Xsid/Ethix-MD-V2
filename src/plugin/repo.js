@@ -46,7 +46,7 @@ const handleRepoCommand = async (m, Matrix) => {
                   name: "cta_url",
                   buttonParamsJson: JSON.stringify({
                     display_text: "FOLLOW WACHANNEL",
-                    url: `https://whatsapp.com/channel/0029VaYauR9ISTkHTj4xvi1l`
+                    url: `https://whatsapp.com/channel/0029VaWJMi3GehEE9e1YsI1S`
                   })
                 },
                 {
