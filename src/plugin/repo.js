@@ -1,12 +1,12 @@
 import pkg, { prepareWAMessageMedia } from '@whiskeysockets/baileys';
 const { generateWAMessageFromContent, proto } = pkg;
-import axios from 'axios';
+import fetch from 'node-fetch';
 import config from '../../config.cjs';
 
 const searchRepo = async (m, Matrix) => {
   const prefix = config.PREFIX;
-const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-const text = m.body.slice(prefix.length + cmd.length).trim();
+  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+  const text = m.body.slice(prefix.length + cmd.length).trim();
 
   const validCommands = ['repo', 'sc', 'script'];
 
@@ -19,8 +19,15 @@ const text = m.body.slice(prefix.length + cmd.length).trim();
 
 const handleRepoCommand = async (m, Matrix, repoUrl) => {
   try {
-    const response = await axios.get(repoUrl);
-    const repoData = response.data;
+    const response = await fetch(repoUrl);
+    
+    // Check if response is okay
+    if (!response.ok) {
+      throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
+    }
+
+    const repoData = await response.json();
+    console.log('API Response:', repoData);
 
     const {
       full_name,
@@ -106,8 +113,8 @@ const handleRepoCommand = async (m, Matrix, repoUrl) => {
     });
     await m.React('✅');
   } catch (error) {
-    console.error('Error processing your request:', error);
-    m.reply('Error processing your request.');
+    console.error('Error processing your request:', error.message);
+    await m.reply('Error processing your request. Please try again later.');
     await m.React('❌');
   }
 };
