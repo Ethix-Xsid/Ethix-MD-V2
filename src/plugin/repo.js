@@ -4,7 +4,8 @@ import fetch from 'node-fetch';
 import config from '../../config.cjs';
 
 const searchRepo = async (m, Matrix) => {
-  const prefix = config.PREFIX;
+  const prefixMatch = m.body.match(/^[+×÷=/_<>[\]!@#.£%^&*()\-"'1234567890?,°€£^:;?¿‽】〕」』【〔「『<>_${}\|`《○♡○¡☆《●●■◇¡¤▪︎•°~♡●♧₩$€○》☆¡Abcdefghijklmonpqrstuvwxyz]/i); 
+  const prefix = prefixMatch ? prefixMatch[0] : '/';
   const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
   const text = m.body.slice(prefix.length + cmd.length).trim();
 
