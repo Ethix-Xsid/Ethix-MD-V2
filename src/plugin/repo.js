@@ -1,121 +1,95 @@
 import pkg, { prepareWAMessageMedia } from '@whiskeysockets/baileys';
 const { generateWAMessageFromContent, proto } = pkg;
-import fetch from 'node-fetch';
-import config from '../../config.cjs';
+import axios from 'axios'; // Import axios for HTTP requests
 
-const searchRepo = async (m, Matrix) => {
-  const prefix = config.PREFIX;
-  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
-  const text = m.body.slice(prefix.length + cmd.length).trim();
-
-  const validCommands = ['repo', 'sc', 'script'];
-
-  if (validCommands.includes(cmd)) {
-    const repoUrl = `https://api.github.com/repos/Ethix-Xsid/Ethix-MD-V2`;
-    
-    await handleRepoCommand(m, Matrix, repoUrl);
-  }
-};
-
-const handleRepoCommand = async (m, Matrix, repoUrl) => {
+const handleRepoCommand = async (m, Matrix) => {
+  const repoUrl = 'https://api.github.com/repos/Ethix-Xsid/Ethix-MD-V2';
   try {
-    const response = await fetch(repoUrl);
-    
-    // Check if response is okay
-    if (!response.ok) {
-      throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
-    }
+    const response = await axios.get(repoUrl);
+    const repoData = response.data;
 
-    const repoData = await response.json();
-    console.log('API Response:', repoData);
+    const { full_name, name, forks_count, stargazers_count, created_at, updated_at, owner } = repoData;
 
-    const {
-      full_name,
-      name,
-      forks_count,
-      stargazers_count,
-      created_at,
-      updated_at,
-      owner,
-    } = repoData;
-
-    const messageText = `*_Repository Information:_*\n
-*_Name:_* ${name}
-*_Stars:_* ${stargazers_count}
-*_Forks:_* ${forks_count}
-*_Created At:_* ${new Date(created_at).toLocaleDateString()}
-*_Last Updated:_* ${new Date(updated_at).toLocaleDateString()}
-*_Owner:_* ${owner.login}
-    `;
+    const messageText = `Hello *_${m.pushName}_,*\nThis is *Ethix-Md,* A Whatsapp Bot Built by *Ethix-Xsid,* Enhanced with Amazing Features to Make Your Whatsapp Communication and Interaction Experience Amazing\n\n*❲❒❳ ɴᴀᴍᴇ:* ${name}\n*❲❒❳ sᴛᴀʀs:* ${stargazers_count}\n*❲❒❳ ғᴏʀᴋs:* ${forks_count}\n*❲❒❳ ᴄʀᴇᴀᴛᴇᴅ ᴏɴ:* ${new Date(created_at).toLocaleDateString()}\n*❲❒❳ ʟᴀsᴛ ᴜᴘᴅᴀᴛᴇᴅ:* ${new Date(updated_at).toLocaleDateString()}`;
 
     const repoMessage = generateWAMessageFromContent(m.from, {
       viewOnceMessage: {
         message: {
           messageContextInfo: {
             deviceListMetadata: {},
-            deviceListMetadataVersion: 2,
+            deviceListMetadataVersion: 2
           },
           interactiveMessage: proto.Message.InteractiveMessage.create({
             body: proto.Message.InteractiveMessage.Body.create({
-              text: messageText,
+              text: messageText
             }),
             footer: proto.Message.InteractiveMessage.Footer.create({
-              text: '© ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴇᴛʜɪx-ᴍᴅ',
+              text: "*© ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴇᴛʜɪx-ᴍᴅ*"
             }),
             header: proto.Message.InteractiveMessage.Header.create({
-              ...(await prepareWAMessageMedia({
-                image: {
-                  url: 'https://telegra.ph/file/fbbe1744668b44637c21a.jpg',
-                },
-              }, { upload: Matrix.waUploadToServer })),
-              title: '',
+             ...(await prepareWAMessageMedia({ image: { url: `https://telegra.ph/file/fbbe1744668b44637c21a.jpg` } }, { upload: Matrix.waUploadToServer })),
+              title: "",
               gifPlayback: true,
-              subtitle: '',
-              hasMediaAttachment: false,
+              subtitle: "",
+              hasMediaAttachment: false 
             }),
             nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
               buttons: [
                 {
-                  name: 'quick_reply',
+                  name: "quick_reply",
                   buttonParamsJson: JSON.stringify({
-                    display_text: 'Contact Owner',
-                    id: `${prefix}owner`,
-                  }),
+                    display_text: "OWNER",
+                    id: ".owner"
+                  })
                 },
                 {
-                  name: 'cta_url',
+                  name: "cta_url",
                   buttonParamsJson: JSON.stringify({
-                    display_text: 'Click Here To Fork',
-                    url: repoUrl.replace('api.', '').replace('repos/', '/forks/'),
-                  }),
+                    display_text: "FOLLOW WACHANNEL",
+                    url: `https://whatsapp.com/channel/0029VaWJMi3GehEE9e1YsI1S`
+                  })
                 },
                 {
-                  name: 'cta_url',
+                  name: "cta_url",
                   buttonParamsJson: JSON.stringify({
-                    display_text: 'Join Our Community',
-                    url: 'https://whatsapp.com/channel/0029VaWJMi3GehEE9e1YsI1S',
-                  }),
-                },
+                    display_text: "CLOCK HERE TO FORK",
+                    url: `https://github.com/Ethix-Xsid/Ethix-MD-V2/fork`
+                  })
+                }
               ],
             }),
             contextInfo: {
               mentionedJid: [m.sender],
               forwardingScore: 9999,
-              isForwarded: true,
-            },
+              isForwarded: false,
+            }
           }),
         },
       },
     }, {});
 
     await Matrix.relayMessage(repoMessage.key.remoteJid, repoMessage.message, {
-      messageId: repoMessage.key.id,
+      messageId: repoMessage.key.id
     });
-    await m.React('✅');
+    await m.React("✅");
+
   } catch (error) {
-    console.error('Error processing your request:', error.message);
-    await m.reply('Error processing your request. Please try again later.');
-    await m.React('❌');
+    console.error("Error processing your request:", error);
+    m.reply('Error processing your request.');
+    await m.React("❌");
+  }
+};
+
+const searchRepo = async (m, Matrix) => {
+  // const prefixMatch = m.body.match(/^[\\/!#.]/);
+   const prefixMatch = m.body.match(/^[+×÷=/_<>[\]!@#.£%^&*()\-"'1234567890?,°€£^:;?¿‽】〕」』【〔「『<>_${}\|`《○♡○¡☆《●●■◇¡¤▪︎•°~♡●♧₩$€○》☆¡Abcdefghijklmonpqrstuvwxyz]/i); 
+  const prefix = prefixMatch ? prefixMatch[0] : '/';
+  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+
+  const validCommands = ['repo', 'sc', 'script'];
+
+  if (validCommands.includes(cmd)) {
+    await handleRepoCommand(m, Matrix);
   }
 };
 
