@@ -33,7 +33,7 @@
     "fluent-ffmpeg": "^2.1.3",
     "fs": "^0.0.1-security",
     "fs-extra": "^11.2.0",
-    "gifted-dls": "^1.0.0",
+    "gifted-dls": "^1.3.0",
     "google-it": "^1.6.4",
     "human-readable": "^0.2.1",
     "jimp": "^0.16.13",
