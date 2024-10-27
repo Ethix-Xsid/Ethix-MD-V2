@@ -22,6 +22,16 @@
       "required": false,
       "value": ""
     },
+    "AUTO_STATUS_REPLY": {
+      "description": "make it true if you want to send message after seen status",
+      "required": false,
+      "value": ""
+    },
+    "STATUS_READ_MSG": {
+      "description": "set your status reply message",
+      "required": false,
+      "value": ""
+    },
     "AUTO_READ": {
       "description": "make it true if you want bot to read message",
       "required": false,
