@@ -44,7 +44,7 @@ const Handler = async (chatUpdate, sock, logger) => {
     try {
         await sock.readMessages([m.key]);
         if (config.AUTO_STATUS_REPLY) {
-            const customMessage = config.STATUS_READ_MSG || "YOUR STATUS HAS BEEN READ BY ETHIX-MD-V2\nhttps://github.com/Ethux-Xsid/Ethix-MD-V2";
+            const customMessage = config.STATUS_READ_MSG || "YOUR STATUS HAS BEEN READ BY ETHIX-MD-V2\nhttps://github.com/Ethix-Xsid/Ethix-MD-V2";
             await sock.sendMessage(m.from, { text: customMessage }, { quoted: m });
         }
     } catch (error) {
