@@ -119,6 +119,7 @@ async function start() {
         Matrix.ev.on('messages.upsert', async (chatUpdate) => {
             try {
                 const mek = chatUpdate.messages[0];
+                console.log(mek);
                 if (!mek.key.fromMe && config.AUTO_REACT) {
                     console.log(mek);
                     if (mek.message) {
