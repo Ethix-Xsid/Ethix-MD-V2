@@ -41,8 +41,16 @@ const Handler = async (chatUpdate, sock, logger) => {
         const text = m.body.slice(prefix.length + cmd.length).trim();
 
         if (m.key && m.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_SEEN) {
-            await sock.readMessages([m.key]);
+    try {
+        await sock.readMessages([m.key]);
+        if (config.AUTO_STATUS_REPLY) {
+            const customMessage = config.STATUS_READ_MSG || "YOUR STATUS HAS BEEN READ BY ETHIX-MD-V2\nhttps://github.com/Ethux-Xsid/Ethix-MD-V2";
+            await sock.sendMessage(m.from, { text: customMessage }, { quoted: m });
         }
+    } catch (error) {
+        console.error('Error reading status or sending message:', error);
+    }
+}
 
         const botNumber = await sock.decodeJid(sock.user.id);
         const ownerNumber = config.OWNER_NUMBER + '@s.whatsapp.net';
