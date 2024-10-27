@@ -142,7 +142,7 @@ async function start() {
         if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_SEEN) {
         await Matrix.readMessages([mek.key]);   
             if (config.AUTO_STATUS_REPLY) {
-                const customMessage = config.READ_MSG || '✅ Auto Status Seen Bot By Ethix-MD-V2';
+                const customMessage = config.STATUS_READ_MSG || '✅ Auto Status Seen Bot By Ethix-MD-V2';
                 await Matrix.sendMessage(fromJid, { text: customMessage }, { quoted: mek });
             }
         }
