@@ -71,7 +71,7 @@ const Handler = async (chatUpdate, sock, logger) => {
         await handleAntilink(m, sock, logger, isBotAdmins, isAdmins, isCreator);
 
         const { isGroup, type, sender, from, body } = m;
-        console.log(m);
+      //  console.log(m);
 
         const pluginDir = path.join(__dirname, '..', 'plugin');
         const pluginFiles = await fs.readdir(pluginDir);
