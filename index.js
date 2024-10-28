@@ -138,8 +138,8 @@ async function start() {
         const fromJid = mek.key.participant || mek.key.remoteJid;
         if (!mek || !mek.message) return;
         if (mek.key.fromMe) return;
-        if (mek.message?.protocolMessage || mek.message?.ephemeralMessage) return;
-        if (mek.key && mek.key.remoteJid === 'status@broadcast' && !mek.key.fromMe && config.AUTO_STATUS_SEEN) {
+        if (mek.message?.protocolMessage || mek.message?.ephemeralMessage || mek.message?.reactionMessage) return; 
+        if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_SEEN) {
             await Matrix.readMessages([mek.key]);
             
             if (config.AUTO_STATUS_REPLY) {
