@@ -61,7 +61,6 @@
     "translate-google-api": "^1.0.4",
     "url": "^0.11.4",
     "uuid": "^9.0.1",
-    "wasitech": "npm:@distube/ytdl-core",
     "yt-search": "^2.11.0"
   }
 }
