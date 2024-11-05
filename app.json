@@ -1,1 +1,86 @@
-{"name":"Ethix-MD-V2","description":"I am Ethix-MD, a WhatsApp MultiDevice Bot built in NodeJs to enhance your whatsapp experience", "repository":"https://github.com/Ethix-Xsid/Ethix-MD-V2", "keywords":["ethix-md","ethix-md-whatsapp-bot","ethixmd"],"success_url":"/","stack":"heroku-24","env":{"SESSION_ID":{"description":"Your session id. Must Start with Ethix","required":true},"MODE":{"description":"set Mode  to public or private","required":true,"value":"public"},"OWNER_NAME":{"description":"Put Owner Name Here","required":true,"value":""},"OWNER_NUMBER":{"description":"Put Owner Number Here","required":true,"value":""},"AUTO_STATUS_SEEN":{"description":"Make it true if you want bot to view status","required":true,"value":"true"},"AUTO_STATUS_REPLY":{"description":"make it true if you want the bot to send message after viewing status","required":false,"value":"false"},"STATUS_READ_MSG":{"description":"set your status reply message to be sent after bot views status","required":false,"value":"Status Viewed by Ethix-MD-V2"},"AUTO_READ":{"description":"Make it true if you want bot to read messages","required":false},"AUTO_TYPING":{"description":"Make it true if you want bot to show typing","required":false},"AUTO_RECORDING":{"description":"Make it true if you want bot to show recording audio","required":false},"ALWAYS_ONLINE":{"description":"Make it true if you want bot to show always online","required":false},"AUTO_BLOCK":{"description":"Make it true if you want bot to auto block only 212 numbers","required":false},"REJECT_CALL":{"description":"Make it true if you want to automatically reject calls","required":false},"PREFIX":{"description":"Your Bot Prefix (default: .)","required":false,"value":"."}},"formation":{"web":{"quantity":1,"size":"basic"}},"buildpacks":[{"url":"heroku/nodejs"},{"url":"https://github.com/DuckyTeam/heroku-buildpack-imagemagick.git"},{"url":"https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"},{"url":"https://github.com/clhuang/heroku-buildpack-webp-binaries.git"}]}
+{
+  "name": "whatsapp-bot (Ethix-MD)",
+  "description": " Whatsapp bot.",
+  "keywords": [
+    "whatsapp bot"
+  ],
+  "repository": "https://github.com/Ethix-Xsid/Ethix-MD",
+  "stack": "container",
+  "env": { 
+      "SESSION_ID": {
+      "description": "your session id",
+      "required": true,
+      "value": ""
+    },
+    "MODE": {
+      "description": "mode public or self",
+      "required": true,
+      "value": "public"
+    },
+    "AUTO_STATUS_SEEN": {
+      "description": "make it true if you want bot to view status",
+      "required": false,
+      "value": ""
+    },
+    "AUTO_READ": {
+      "description": "make it true if you want bot to read message",
+      "required": false,
+      "value": ""
+    },
+    "AUTO_TYPING": {
+      "description": "make it true if you want bot to show typing",
+      "required": false,
+      "value": ""
+    },
+    "AUTO_RECORDING": {
+      "description": "make it true if you want bot to show recording audio",
+      "required": false,
+      "value": ""
+    },
+    "ALWAYS_ONLINE": {
+      "description": "make it true if you want bot to show always online",
+      "required": false,
+      "value": ""
+    },
+    "AUTO_BLOCK": {
+      "description": "make it true if you want bot to auto block only 212 numbers",
+      "required": false,
+      "value": ""
+    },
+    "REJECT_CALL": {
+      "description": "make it true if you want to reject call",
+      "required": false,
+      "value": ""
+    },
+    "AUTO_STATUS_REPLY": {
+      "description": "make it true if you want to send auto message after status seen",
+      "required": false,
+      "value": ""
+    },
+    "STATUS_READ_MSG": {
+      "description": "enter your status reply message",
+      "required": false,
+      "value": ""
+    },
+    "PREFIX": {
+      "description": "Your Bot Prefix default (.)",
+      "required": false,
+      "value": ""
+    }
+    },
+    "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "https://github.com/DuckyTeam/heroku-buildpack-imagemagick.git"
+    },
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+    },
+    {
+      "url": "https://github.com/clhuang/heroku-buildpack-webp-binaries.git"
+    }
+  ]
+}
+
