@@ -17,6 +17,31 @@
       "required": true,
       "value": "public"
     },
+    "AUTO_STATUS_REPLY": {
+      "description": "If you want status view reply then ture",
+      "required": false,
+      "value": ""
+      },
+    "AUTO_REACT": {
+      "description": "For auto react true otherwise false",
+      "required": false,
+      "value": "false"
+      },
+    "STATUS_READ_MSG": {
+      "description": "Put your Status Reply message ",
+      "required": false,
+      "value": ""
+      },
+    "OWNER_NUMBER": {
+      "description": "PUT YOUR NUMBER",
+      "required": false,
+      "value": "923006838210"
+      },
+    "OWNER_NAME": {
+      "description": "PUT YOUR NAME",
+      "required": false,
+      "value": "FAISAL DURRANI"
+      },
     "AUTO_STATUS_SEEN": {
       "description": "make it true if you want bot to view status",
       "required": false,
@@ -83,4 +108,3 @@
     }
   ]
 }
-
