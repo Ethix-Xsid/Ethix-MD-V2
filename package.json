@@ -40,7 +40,6 @@
     "jsqr": "^1.4.0",
     "libphonenumber": "^0.0.10",
     "moment-timezone": "^0.5.45",
-    "nayan-media-downloader": "^2.3.3",
     "node-cache": "^5.1.2",
     "node-cron": "^3.0.3",
     "node-fetch": "^3.3.2",
